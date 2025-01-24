@@ -23,8 +23,8 @@ function operate(op, a, b){
     return op(a, b);
 }
 
-let a;
-let b;
+let a = "";
+let b = "";
 let op;
 let reset = false;
 
