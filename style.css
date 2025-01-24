@@ -1,0 +1,36 @@
+* {
+    font-family: "Times New Roman", sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 500px;
+    gap: 10px;
+}
+
+.first, .second, .third, .fourth, .fifth {
+    display: flex;
+    width: 400px;
+    height: 100px;
+    gap: 10px;
+}
+
+.display {
+    display: flex;
+    width: 400px;
+    height: 50px;
+    justify-content: right;
+    align-items: center;
+    padding: 10px;
+    background-color: grey;
+}
+
+button {
+    width: 100px;
+    height: 100px;
+    margin: 0px;
+    padding: 0px;
+    flex: 1;
+}
