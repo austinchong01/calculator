@@ -29,8 +29,10 @@ const container = document.querySelector(".container")
 
 container.addEventListener("click", (element) => {
     const btn =  element.target.classList;
-    display.textContent = display.textContent + btn;
-    if (btn == "clear") {
-        display.textContent = "";
+    if (element.target.tagName == "BUTTON"){
+        display.textContent = display.textContent + btn;
+        if (btn == "clear") {
+            display.textContent = "";
+        }
     }
 })
