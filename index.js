@@ -26,6 +26,7 @@ function operate(op, a, b){
 let a;
 let b;
 let op;
+let reset = false;
 
 // console.log(operate(op, 1, 2));
 const display = document.querySelector(".display");
@@ -44,7 +45,11 @@ container.addEventListener("click", (element) => {
         } else if (btn == "="){
             b = display.textContent;
             display.textContent = operate(op, a, b);
+            reset = true;
         } else {
+            if (reset){
+                display.textContent = ""
+            }
             display.textContent = display.textContent + btn;
         }
     }
