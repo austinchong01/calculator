@@ -31,6 +31,8 @@ let op = null;
 
 let reset = false;
 let hasDecimal = false;
+let numCount = 0;
+let opCount = 0;
 
 const display = document.querySelector(".display");
 const container = document.querySelector(".container")
@@ -41,9 +43,14 @@ container.addEventListener("click", (element) => {
 
     if (element.target.tagName == "BUTTON"){
         if (classList == "operator"){
-            calc.push(display.textContent);
-            calc.push(btn)
-            display.textContent = "";
+            if (!isNaN(display.textContent) && display.textContent != "") {
+                calc.push(display.textContent);
+                calc.push(btn)
+                display.textContent = "";
+
+                ++numCount;
+            }
+            ++opCount;
         } else {
             switch(btn) {
                 case "clear":
@@ -51,24 +58,33 @@ container.addEventListener("click", (element) => {
                     calc = [];
                     break;
                 case "equal":
-                    calc.push(display.textContent);
-                    // if (isValid(calc)){
-                    //     display.textContent = operate(op, a, b);
-                    //     reset = true;
-                    // } else {
-                    //     calc = [];
-                    //     display.textContent = "ERROR";
-                    // }
-                    
-                    while (calc.length != 1){
-                        console.log(calc);
-                        a = calc.splice(0, 1);
-                        op = calc.splice(0, 1);
-                        b = calc.splice(0, 1);
-                        calc.unshift(operate(op, a, b));
+                    if (!isNaN(display.textContent) && display.textContent != "") {
+                        calc.push(display.textContent);
+                        ++numCount;
                     }
-                    display.textContent = `${calc[0]}`;
-                    calc = [];
+
+                    if ((numCount - 1) == opCount){
+                        while (calc.length != 1){
+                            console.log(calc);
+                            a = calc.splice(0, 1);
+                            op = calc.splice(0, 1);
+                            b = calc.splice(0, 1);
+                            calc.unshift(operate(op, a, b));
+                        }
+                        display.textContent = `${Math.ceil(calc[0] * 100) / 100}`;
+                        calc = [];
+                        reset = true;
+
+                        numCount = 0;
+                        opCount = 0;
+                    } else {
+                        display.textContent = "ERROR"
+                        calc = [];
+                        reset = true;
+
+                        numCount = 0;
+                        opCount = 0;
+                    }
                     break;
                 case "+/-":
                     if (display.textContent > 0 || display.textContent == ""){
