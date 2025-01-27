@@ -56,6 +56,8 @@ container.addEventListener("click", (element) => {
             if (!calc.length == 0){
                 if (calc.length == 3){
                     evaluate(calc);
+                    calc.push(btn);
+                    console.log(calc);
                 } else {
                     if (isNaN(calc[calc.length - 1])){//if the end is an operator, replace it
                         calc[calc.length - 1] = btn;
@@ -65,8 +67,6 @@ container.addEventListener("click", (element) => {
                     display.textContent = "";
                 }
             }
-            console.log(calc);
-
         } else {
             switch(btn) {
                 case "clear":
@@ -79,7 +79,7 @@ container.addEventListener("click", (element) => {
                     } else {
                         display.textContent = "INVALID INPUT"
                     }
-                    calc = [];
+                    console.log(calc);
                     break;
                 case "+/-":
                     //only change sign if there is already a number in display
@@ -94,12 +94,14 @@ container.addEventListener("click", (element) => {
                 default:
                     if(reset){
                         display.textContent = ""
-                        reset = false;
-                    }
-                    if (calc.length == 0 || (isNaN(calc[calc.length - 1]))){ //check if calc is empty or last element is operator
                         calc.push(btn);
-                    } else{
-                        calc[calc.length - 1] = calc[calc.length - 1] + btn;
+                        reset = false;
+                    }else {
+                        if (calc.length == 0 || (isNaN(calc[calc.length - 1]))){ //check if calc is empty or last element is operator
+                            calc.push(btn);
+                        } else{
+                            calc[calc.length - 1] = calc[calc.length - 1] + btn;
+                        }
                     }
                     display.textContent = calc[calc.length - 1];
                     break;
