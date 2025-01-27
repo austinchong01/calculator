@@ -26,16 +26,25 @@ function operate(op, a, b){
     return op(a, b);
 }
 
+function evaluate(calc){
+    let a = calc.splice(0, 1);
+    op = calc.splice(0, 1);
+    let b = calc.splice(0, 1);
+    calc.unshift(operate(op, parseInt(a), parseInt(b)));
+
+    display.textContent = `${Math.ceil(calc[0] * 1000) / 1000}`;
+    reset = true;
+}
+
 let calc = [];
 let op = null;
 
 let reset = false;
 let hasDecimal = false;
-let numCount = 0;
-let opCount = 0;
 
 const display = document.querySelector(".display");
 const container = document.querySelector(".container")
+display.textContent = 0;
 
 container.addEventListener("click", (element) => {
     const btn =  element.target.id;
@@ -43,14 +52,21 @@ container.addEventListener("click", (element) => {
 
     if (element.target.tagName == "BUTTON"){
         if (classList == "operator"){
-            if (!isNaN(display.textContent) && display.textContent != "") {
-                calc.push(display.textContent);
-                calc.push(btn)
-                display.textContent = "";
-
-                ++numCount;
+            //do not push if calc is empty
+            if (!calc.length == 0){
+                if (calc.length == 3){
+                    evaluate(calc);
+                } else {
+                    if (isNaN(calc[calc.length - 1])){//if the end is an operator, replace it
+                        calc[calc.length - 1] = btn;
+                    } else {
+                        calc.push(btn);
+                    }
+                    display.textContent = "";
+                }
             }
-            ++opCount;
+            console.log(calc);
+
         } else {
             switch(btn) {
                 case "clear":
@@ -58,39 +74,18 @@ container.addEventListener("click", (element) => {
                     calc = [];
                     break;
                 case "equal":
-                    if (!isNaN(display.textContent) && display.textContent != "") {
-                        calc.push(display.textContent);
-                        ++numCount;
-                    }
-
-                    if ((numCount - 1) == opCount){
-                        while (calc.length != 1){
-                            console.log(calc);
-                            a = calc.splice(0, 1);
-                            op = calc.splice(0, 1);
-                            b = calc.splice(0, 1);
-                            calc.unshift(operate(op, a, b));
-                        }
-                        display.textContent = `${Math.ceil(calc[0] * 1000) / 1000}`;
-                        calc = [];
-                        reset = true;
-
-                        numCount = 0;
-                        opCount = 0;
+                    if (calc.length % 2 != 0){
+                        evaluate(calc);
                     } else {
-                        display.textContent = "ERROR"
-                        calc = [];
-                        reset = true;
-
-                        numCount = 0;
-                        opCount = 0;
+                        display.textContent = "INVALID INPUT"
                     }
+                    calc = [];
                     break;
                 case "+/-":
-                    if (display.textContent > 0 || display.textContent == ""){
-                        display.textContent = "-" + display.textContent;
-                    } else {
-                        display.textContent = -1 * display.textContent;
+                    //only change sign if there is already a number in display
+                    if (!(calc.length == 0 || (isNaN(calc[calc.length - 1])))){
+                        calc[calc.length - 1] = calc[calc.length - 1] * -1;
+                        display.textContent = calc[calc.length - 1]
                     }
                     break;
                 case ".":
@@ -101,7 +96,12 @@ container.addEventListener("click", (element) => {
                         display.textContent = ""
                         reset = false;
                     }
-                    display.textContent = display.textContent + btn;
+                    if (calc.length == 0 || (isNaN(calc[calc.length - 1]))){ //check if calc is empty or last element is operator
+                        calc.push(btn);
+                    } else{
+                        calc[calc.length - 1] = calc[calc.length - 1] + btn;
+                    }
+                    display.textContent = calc[calc.length - 1];
                     break;
             }
         }
