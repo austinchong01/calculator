@@ -1,40 +1,61 @@
 * {
     font-family: "Times New Roman", sans-serif;
+    font-size: 28px;
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    width: 430px;
-    height: 540px;
-    gap: 10px;
+    width: 415px;
+    height: 510px;
+    gap: 5px;
+    padding: 10px;
+    background-color: black;
+    border-radius: 8px;
 }
 
 .first, .second, .third, .fourth, .fifth {
     display: flex;
-    width: 430px;
-    height: 100px;
-    gap: 10px;
+    width: 415px;
+    height: 80px;
+    gap: 5px;
 }
 
 .display {
     display: flex;
-    width: 430px;
-    height: 50px;
+    width: 395px;
+    height: 60px;
     justify-content: right;
     align-items: center;
     padding: 10px;
     background-color: grey;
+    border-radius: 8px;
 }
 
 button {
     width: 100px;
-    height: 100px;
-    margin: 0px;
-    padding: 0px;
+    height: 80px;
+    border-radius: 8px;
+    border: none;
 }
 
 #equal, #clear {
     flex: 1;
+}
+
+.number {
+    background-color: #5067aa;
+}
+
+.operator{
+    background-color: #dca509;
+}
+
+#equal {
+    background-color: #05ad29;
+}
+
+.sign {
+    background-color: #d23a04;
 }

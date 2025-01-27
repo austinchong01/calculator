@@ -71,7 +71,7 @@ container.addEventListener("click", (element) => {
                             b = calc.splice(0, 1);
                             calc.unshift(operate(op, a, b));
                         }
-                        display.textContent = `${Math.ceil(calc[0] * 100) / 100}`;
+                        display.textContent = `${Math.ceil(calc[0] * 1000) / 1000}`;
                         calc = [];
                         reset = true;
 
