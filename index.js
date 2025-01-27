@@ -57,14 +57,12 @@ container.addEventListener("click", (element) => {
                 if (calc.length == 3){
                     evaluate(calc);
                     calc.push(btn);
-                    console.log(calc);
                 } else {
                     if (isNaN(calc[calc.length - 1])){//if the end is an operator, replace it
                         calc[calc.length - 1] = btn;
                     } else {
                         calc.push(btn);
                     }
-                    display.textContent = "";
                 }
             }
         } else {
@@ -74,12 +72,9 @@ container.addEventListener("click", (element) => {
                     calc = [];
                     break;
                 case "equal":
-                    if (calc.length % 2 != 0){
+                    if (calc.length % 2 != 0 && calc.length != 0){
                         evaluate(calc);
-                    } else {
-                        display.textContent = "INVALID INPUT"
                     }
-                    console.log(calc);
                     break;
                 case "+/-":
                     //only change sign if there is already a number in display
