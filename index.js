@@ -64,17 +64,20 @@ container.addEventListener("click", (element) => {
                         calc.push(btn);
                     }
                 }
+                hasDecimal = false;
             }
         } else {
             switch(btn) {
                 case "clear":
-                    display.textContent = "";
+                    display.textContent = 0;
                     calc = [];
+                    hasDecimal = false;
                     break;
                 case "equal":
                     if (calc.length % 2 != 0 && calc.length != 0){
                         evaluate(calc);
                     }
+                    hasDecimal = false;
                     break;
                 case "+/-":
                     //only change sign if there is already a number in display
@@ -84,7 +87,17 @@ container.addEventListener("click", (element) => {
                     }
                     break;
                 case ".":
-                    display.textContent = display.textContent + btn;
+                    if (!hasDecimal){
+                        if (calc.length == 0){
+                            calc.push("0.");
+                            display.textContent = "0.";
+                        } else {
+                            calc[calc.length - 1] = calc[calc.length - 1] + btn;
+                            display.textContent = display.textContent + btn;
+                        }
+                        hasDecimal = true;
+                    }
+                    console.log(calc)
                     break;
                 default:
                     if(reset){
