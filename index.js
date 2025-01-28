@@ -27,12 +27,20 @@ function operate(op, a, b){
 }
 
 function evaluate(calc){
+    console.log(calc);
+
+    //[3, +, 4]  => [a, op, b]
     let a = calc.splice(0, 1);
     op = calc.splice(0, 1);
     let b = calc.splice(0, 1);
-    calc.unshift(operate(op, parseInt(a), parseInt(b)));
 
-    display.textContent = `${Math.ceil(calc[0] * 1000) / 1000}`;
+    //[7]
+    calc.unshift(operate(op, Number(a), Number(b)));
+
+    //round to nearest .001
+    calc[0] = Math.ceil(calc[0] * 1000) / 1000
+
+    display.textContent = calc[0];
     reset = true;
 }
 
@@ -66,6 +74,8 @@ container.addEventListener("click", (element) => {
                 }
                 hasDecimal = false;
             }
+            reset = false;
+            console.log(calc)
         } else {
             switch(btn) {
                 case "clear":
@@ -81,14 +91,15 @@ container.addEventListener("click", (element) => {
                     break;
                 case "+/-":
                     //only change sign if there is already a number in display
-                    if (!(calc.length == 0 || (isNaN(calc[calc.length - 1])))){
-                        calc[calc.length - 1] = calc[calc.length - 1] * -1;
-                        display.textContent = calc[calc.length - 1]
+                    if (!(calc.length == 0) && !(isNaN(calc[calc.length - 1]))){
+                        calc[calc.length - 1] = -1 * Math.ceil(calc[calc.length - 1] * 1000) / 1000;
+                        display.textContent = calc[calc.length - 1];
                     }
+                    console.log(calc);
                     break;
                 case ".":
                     if (!hasDecimal){
-                        if (calc.length == 0){
+                        if (calc.length == 0 || (isNaN(calc[calc.length - 1]))){
                             calc.push("0.");
                             display.textContent = "0.";
                         } else {
@@ -101,8 +112,11 @@ container.addEventListener("click", (element) => {
                     break;
                 default:
                     if(reset){
-                        display.textContent = ""
+                        //remove element, reset calc array
+                        calc.shift();
                         calc.push(btn);
+                        display.textContent = ""
+
                         reset = false;
                     }else {
                         if (calc.length == 0 || (isNaN(calc[calc.length - 1]))){ //check if calc is empty or last element is operator
@@ -112,6 +126,7 @@ container.addEventListener("click", (element) => {
                         }
                     }
                     display.textContent = calc[calc.length - 1];
+                    console.log(calc)
                     break;
             }
         }
