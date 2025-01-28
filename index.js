@@ -27,8 +27,6 @@ function operate(op, a, b){
 }
 
 function evaluate(calc){
-    console.log(calc);
-
     //[3, +, 4]  => [a, op, b]
     let a = calc.splice(0, 1);
     op = calc.splice(0, 1);
@@ -75,7 +73,6 @@ container.addEventListener("click", (element) => {
                 hasDecimal = false;
             }
             reset = false;
-            console.log(calc)
         } else {
             switch(btn) {
                 case "clear":
@@ -95,7 +92,6 @@ container.addEventListener("click", (element) => {
                         calc[calc.length - 1] = -1 * Math.ceil(calc[calc.length - 1] * 1000) / 1000;
                         display.textContent = calc[calc.length - 1];
                     }
-                    console.log(calc);
                     break;
                 case ".":
                     if (!hasDecimal){
@@ -108,7 +104,6 @@ container.addEventListener("click", (element) => {
                         }
                         hasDecimal = true;
                     }
-                    console.log(calc)
                     break;
                 default:
                     if(reset){
@@ -126,7 +121,6 @@ container.addEventListener("click", (element) => {
                         }
                     }
                     display.textContent = calc[calc.length - 1];
-                    console.log(calc)
                     break;
             }
         }
